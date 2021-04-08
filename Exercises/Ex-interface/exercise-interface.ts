@@ -13,7 +13,13 @@ const Exercise2 = () => {
   // • Create an interface `CartItem` and replace the param's type with it
   // • Make variantId optional
 
-  function addToCart(item: { id: number; title: string; variantId: number }) {
+  interface CartItem {
+    id: number; 
+    title: string; 
+    variantId?: number;
+  }
+
+  function addToCart(item: CartItem) {
     console.log('[Exercise 2.1]', `Adding "${item.title}" to cart.`)
   }
 
@@ -24,7 +30,12 @@ const Exercise2 = () => {
   // • Create and implement an interface on `Person` to ensure it always has accessible
   //   `name` and `age` member properties.
 
-  class Person {
+  interface PersonInterface {
+    name: string;
+    age: number;
+  }
+
+  class Person implements PersonInterface{
     constructor(public name: string, public age: number) {}
   }
 
@@ -45,7 +56,13 @@ const Exercise2 = () => {
   }
   // [/do not edit]
 
-  const montreal = {
+  interface Coords extends City {
+    latitude: number;
+    longitude: number;
+    coords: Coords;
+  }
+
+  const montreal: any = {
     coords: {
       latitude: 42.332,
       longitude: -73.324,
@@ -53,7 +70,7 @@ const Exercise2 = () => {
     name: 'Montréal',
   }
 
-  const tampa = {
+  const tampa: any = {
     coords: {
       latitude: '27.9478',
       longitude: '-82.4584',
@@ -61,28 +78,26 @@ const Exercise2 = () => {
     name: 'Tampa',
   }
 
-  function getCityInfo(city: City) {
-    const coords = `(${city.coords.latitude.toFixed(
-      3
-    )}, ${city.coords.longitude.toFixed(3)})`
+  function getCityInfo(city: Coords) {
+    const coords = `(${city.coords.latitude.toFixed(3)}, ${city.coords.longitude.toFixed(3)})`
     return `${city.name.toUpperCase()} is located at ${coords}.`
   }
 
   console.log(
-    '[Exercise 2.3]',
-    `${getCityInfo(montreal)} \n\n ${getCityInfo(tampa)}`
+    '[Exercise 2.3]',`${getCityInfo(montreal)} \n\n ${getCityInfo(tampa)}`
   )
 
   // ======== Exercise 2.4 ========
   // The purpose of this exercise is simply to illustrate a use of `readonly`
 
   interface UserSchema {
-    readonly id: number
+    id: number
     name: string
   }
 
   class User implements UserSchema {
-    constructor(public name: string, readonly id: number) {}
+    constructor(public name: string, id: number) {}
+    id: number
   }
 
   const user = new User('Dog', 1)
