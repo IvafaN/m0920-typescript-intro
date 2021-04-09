@@ -68,10 +68,6 @@ const Exercise2 = () => {
     longitude: number;
   }
 
-  // interface Place extends City{
-  //   coords: Coords
-  // }
-
   interface City{
     coords: Coords
   }
@@ -92,9 +88,6 @@ const Exercise2 = () => {
     name: 'Tampa',
   }
 
-  // (string | number) // union
-  // (string & number) //intersection
-
   function getCityInfo(city: City) {
     const coords = `(${city.coords.latitude.toFixed(
       3
@@ -111,12 +104,13 @@ const Exercise2 = () => {
   // The purpose of this exercise is simply to illustrate a use of `readonly`
 
   interface UserSchema {
-    readonly id: number
+    id: number
     name: string
   }
 
   class User implements UserSchema {
-    constructor(public name: string, readonly id: number) {}
+    constructor(public name: string, id: number) {}
+    id: number
   }
 
   const user = new User('Dog', 1)
@@ -124,7 +118,7 @@ const Exercise2 = () => {
   console.log(user.id) // readable
 
   user.name = 'Harold' // writable
-  // user.id = 5 // not writable
+  user.id = 5 // not writable
 
   console.log(`User:`, user)
 }
