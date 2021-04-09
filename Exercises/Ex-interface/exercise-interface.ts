@@ -13,10 +13,10 @@ const Exercise2 = () => {
   // • Create an interface `CartItem` and replace the param's type with it
   // • Make variantId optional
 
-  interface CartItem {
+  interface CartItem { 
     id: number; 
     title: string; 
-    variantId?: number;
+    variantId?: number 
   }
 
   function addToCart(item: CartItem) {
@@ -30,12 +30,12 @@ const Exercise2 = () => {
   // • Create and implement an interface on `Person` to ensure it always has accessible
   //   `name` and `age` member properties.
 
-  interface PersonInterface {
+  interface Person {
     name: string;
     age: number;
   }
 
-  class Person implements PersonInterface{
+  class Person implements Person {
     constructor(public name: string, public age: number) {}
   }
 
@@ -50,19 +50,33 @@ const Exercise2 = () => {
   //   `coords` property of type `Coords`.
   // • Fix whatever is wrong with `tampa`
 
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //--------------------Please do not edit from here--------------------
   // [do not edit] (pretend this is coming from external `foo.d.ts` lib)
   interface City {
     name: string
   }
-  // [/do not edit]
+  //-----------------------[/do not edit]-------------------------------
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
+  //--------------------------------------------------------------------
 
-  interface Coords extends City {
+  interface Coords {
     latitude: number;
     longitude: number;
-    coords: Coords;
   }
 
-  const montreal: any = {
+  // interface Place extends City{
+  //   coords: Coords
+  // }
+
+  interface City{
+    coords: Coords
+  }
+
+  const montreal = {
     coords: {
       latitude: 42.332,
       longitude: -73.324,
@@ -70,34 +84,39 @@ const Exercise2 = () => {
     name: 'Montréal',
   }
 
-  const tampa: any = {
+  const tampa = {
     coords: {
-      latitude: '27.9478',
-      longitude: '-82.4584',
+      latitude: 27.9478,
+      longitude: -82.4584,
     },
     name: 'Tampa',
   }
 
-  function getCityInfo(city: Coords) {
-    const coords = `(${city.coords.latitude.toFixed(3)}, ${city.coords.longitude.toFixed(3)})`
+  // (string | number) // union
+  // (string & number) //intersection
+
+  function getCityInfo(city: City) {
+    const coords = `(${city.coords.latitude.toFixed(
+      3
+    )}, ${city.coords.longitude.toFixed(3)})`
     return `${city.name.toUpperCase()} is located at ${coords}.`
   }
 
   console.log(
-    '[Exercise 2.3]',`${getCityInfo(montreal)} \n\n ${getCityInfo(tampa)}`
+    '[Exercise 2.3]',
+    `${getCityInfo(montreal)} \n\n ${getCityInfo(tampa)}`
   )
 
   // ======== Exercise 2.4 ========
   // The purpose of this exercise is simply to illustrate a use of `readonly`
 
   interface UserSchema {
-    id: number
+    readonly id: number
     name: string
   }
 
   class User implements UserSchema {
-    constructor(public name: string, id: number) {}
-    id: number
+    constructor(public name: string, readonly id: number) {}
   }
 
   const user = new User('Dog', 1)
@@ -105,7 +124,7 @@ const Exercise2 = () => {
   console.log(user.id) // readable
 
   user.name = 'Harold' // writable
-  user.id = 5 // not writable
+  // user.id = 5 // not writable
 
   console.log(`User:`, user)
 }
